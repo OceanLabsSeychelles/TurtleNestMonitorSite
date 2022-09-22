@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import todoSlide from "./features/todoSlice";
+import graphDataSlice from "./reducers/graphDataSlice";
 
 export default configureStore({
   reducer: {
-    todo: todoSlide
+    graphData: graphDataSlice,
+
   }
 });

@@ -1,58 +1,63 @@
-import "./styles.css";
-import { useState, useEffect } from "react";
+import {useState, useEffect, useMemo} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getTodoAsync, addTodoAsync, showTodo } from "./features/todoSlice";
 import ResponsivePlot from "./components/ResponsivePlot";
 import Styles from "./components/Styles";
+import {graphDataActions} from "./reducers/graphDataSlice";
 import "../node_modules/react-vis/dist/style.css";
-
-async function getDb() {
-  let response = await fetch(
-    'https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": "2022-01-01"}',
-    {
-      headers: {
-        "X-API-KEY": "629678a3c4d5c3756d35a40e",
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    }
-  );
-
-  let data = await response.json();
-  return data;
-}
+import {Badge, Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.css";
 
 export default function App() {
-  const todo = useSelector(showTodo);
   const dispatch = useDispatch();
-  const [newTodo, setNewTodo] = useState({
-    userId: 69,
-    id: 69,
-    title: "",
-    completed: false
-  });
-  const [fetchData, setFetchData] = useState([]);
-
-  const addNewTodo = () => {
-    dispatch(addTodoAsync(newTodo));
-  };
+  const graphData = useSelector(state => state.graphData)
 
   useEffect(() => {
     async function effect() {
-      const newData = await getDb();
-      const rawData = newData["0"].data;
-      const lineData = [];
-      rawData.forEach((point, index) => {
-        lineData.push({ x: index, y: point.temperature });
-      });
-      setFetchData(lineData);
+      dispatch(graphDataActions.loadDate());
     }
     effect();
-  }, []);
+  }, [graphData.date]);
+
+    function renderDateButtons() {
+        const ProbeVariant = {state:"primary"}
+        return (
+            <Col style={Styles.BootstrapCenter}>
+            <Row>
+                <ButtonGroup style={{alignItems: "center"}}>
+                    <Button
+                        variant={ProbeVariant.state}
+                        onClick={() => {
+                            dispatch(graphDataActions.decrementDate())
+                        }}
+                    >
+                        {"<"}
+                    </Button>
+                    <Button variant={ProbeVariant.state}>{graphData.fetchableDate}</Button>
+                    <Button
+                        variant={ProbeVariant.state}
+                        onClick={() => {
+                            dispatch(graphDataActions.incrementDate())
+                        }}
+                    >
+                        {">"}
+                    </Button>
+                </ButtonGroup>
+            </Row>
+            </Col>
+        )
+    }
 
   return (
     <div className="App" style={Styles.BootstrapCenter}>
-      <ResponsivePlot isMobile={false} data={fetchData} color={"red"} />
+      <Col xs={12}>
+          <h3 style={Styles.BootstrapCenter}>Temperature</h3>
+          <ResponsivePlot width={0.8} height={.225} isMobile={false} data={graphData.temperature} />
+          <h3 style={Styles.BootstrapCenter}>Oxygen</h3>
+          <ResponsivePlot width={0.8} height={.225} isMobile={false} data={graphData.oxygen} />
+          <h3 style={Styles.BootstrapCenter}>Humidity</h3>
+          <ResponsivePlot width={0.8} height={.225} isMobile={false} data={graphData.humidity} />
+          {renderDateButtons()}
+      </Col>
     </div>
   );
 }

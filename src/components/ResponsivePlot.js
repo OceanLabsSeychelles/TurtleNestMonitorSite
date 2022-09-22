@@ -32,7 +32,6 @@ export default function ResponsivePlot(props) {
     setWindowSize(getWindowDimensions());
     setWidth(myRef.current.clientWidth);
     setHeight(myRef.current.clientHeight);
-    console.log(width, height);
   };
 
   useEffect(() => {
@@ -47,8 +46,12 @@ export default function ResponsivePlot(props) {
   if (!props.isMobile) {
     return (
       <div style={Styles.BootstrapCenter} ref={myRef}>
-        <Col xs={12}>
-          <XYPlot height={300} width={600} animation={modes[0]}>
+        <Col style={Styles.BootstrapCenter} xs={12}>
+          <XYPlot
+            height={windowSize.height * props.height}
+            width={windowSize.width * props.width}
+            animation={modes[0]}
+          >
             <VerticalGridLines />
             <HorizontalGridLines />
             <XAxis />
