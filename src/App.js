@@ -19,7 +19,7 @@ export default function App() {
   }, [graphData.date]);
 
     function renderDateButtons() {
-        const ProbeVariant = (graphData.loading)?{state:"secondary"} : {state:"primary"}
+        const ProbeVariant = (graphData.loading)?{state:"outline-primary"} : {state:"primary"}
         return (
             <Col style={Styles.BootstrapCenter}>
             <Row >
@@ -51,8 +51,8 @@ export default function App() {
 
   return (
     <div className="App" style={Styles.BootstrapCenter}>
-      <Col xs={12}>
-          <h3 style={Styles.BootstrapCenter}>Temperature</h3>
+      <Col xs={12} >
+          <h3 style={{...Styles.BootstrapCenter, marginTop:"2.5rem"}}>Temperature</h3>
           <ResponsivePlot width={0.8} height={.225} isMobile={false} data={graphData.temperature} />
           <h3 style={Styles.BootstrapCenter}>Oxygen</h3>
           <ResponsivePlot width={0.8} height={.225} isMobile={false} data={graphData.oxygen} />
