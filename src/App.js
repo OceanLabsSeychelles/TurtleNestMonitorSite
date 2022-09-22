@@ -58,9 +58,6 @@ export default function App() {
                 <Offcanvas.Body>
                     <Col>
                     <Row style={{margin:"2rem"}}>
-                    There is no record of any data on this day.
-                    </Row>
-                    <Row style={{margin:"2rem"}}>
                     <Button
                         onClick={()=>{dispatch(graphDataActions.setNoData(false))}}
                         variant={"danger"}>Got it.</Button>
