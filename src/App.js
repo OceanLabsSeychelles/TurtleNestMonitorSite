@@ -19,13 +19,14 @@ export default function App() {
   }, [graphData.date]);
 
     function renderDateButtons() {
-        const ProbeVariant = {state:"primary"}
+        const ProbeVariant = (graphData.loading)?{state:"secondary"} : {state:"primary"}
         return (
             <Col style={Styles.BootstrapCenter}>
-            <Row>
+            <Row >
                 <ButtonGroup style={{alignItems: "center"}}>
                     <Button
-                        variant={ProbeVariant.state}
+                        disabled={graphData.loading}
+                        variant={"outline-primary"}
                         onClick={() => {
                             dispatch(graphDataActions.decrementDate())
                         }}
@@ -34,7 +35,8 @@ export default function App() {
                     </Button>
                     <Button variant={ProbeVariant.state}>{graphData.fetchableDate}</Button>
                     <Button
-                        variant={ProbeVariant.state}
+                        disabled={graphData.loading}
+                        variant={"outline-primary"}
                         onClick={() => {
                             dispatch(graphDataActions.incrementDate())
                         }}

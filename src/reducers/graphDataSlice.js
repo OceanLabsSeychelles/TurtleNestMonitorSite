@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const loadDate = createAsyncThunk(
     'graphData/loadDate',
     async (payload,thunkApi) => {
+        thunkApi.dispatch(graphDataSlice.actions.setLoading(true))
         const state = thunkApi.getState();
         let response = await fetch(
             `https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": "${state.graphData.fetchableDate}"}`,
@@ -28,6 +29,7 @@ const initialDate = new Date(2022, 1, 1)
 export const graphDataSlice = createSlice({
     name: "graphData",
     initialState: {
+        loading:false,
         oxygen:[],
         temperature:[],
         humidity:[],
@@ -37,6 +39,9 @@ export const graphDataSlice = createSlice({
 
     },
     reducers: {
+        setLoading(state, action) {
+            state.loading = action.payload;
+        },
         incrementDate:(state,action) => {
             const date = new Date(state.date)
             let newDate = new Date()
@@ -54,7 +59,10 @@ export const graphDataSlice = createSlice({
     },
     extraReducers:builder=> {
         builder.addCase(loadDate.fulfilled, (state, action) => {
-            if (action.payload["0"]?.data === undefined) return;
+            if (action.payload["0"]?.data === undefined) {
+                state.loading = false;
+                return
+            };
             const rawData = action.payload["0"].data;
             state.oxygen = [];
             state.temperature = [];
@@ -64,6 +72,7 @@ export const graphDataSlice = createSlice({
                 state.temperature.push({ x: index, y: point.temperature });
                 state.humidity.push({ x: index, y: point.humidity });
             });
+            state.loading = false
         })
     }
 });
