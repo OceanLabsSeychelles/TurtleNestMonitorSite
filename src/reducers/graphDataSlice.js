@@ -29,6 +29,7 @@ const initialDate = new Date(2022, 1, 1)
 export const graphDataSlice = createSlice({
     name: "graphData",
     initialState: {
+        noData:false,
         loading:false,
         oxygen:[],
         temperature:[],
@@ -39,6 +40,9 @@ export const graphDataSlice = createSlice({
 
     },
     reducers: {
+        setNoData(state, action) {
+            state.noData = action.payload
+        },
         setLoading(state, action) {
             state.loading = action.payload;
         },
@@ -61,6 +65,7 @@ export const graphDataSlice = createSlice({
         builder.addCase(loadDate.fulfilled, (state, action) => {
             if (action.payload["0"]?.data === undefined) {
                 state.loading = false;
+                state.noData = true;
                 return
             };
             const rawData = action.payload["0"].data;
