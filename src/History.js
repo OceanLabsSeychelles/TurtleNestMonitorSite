@@ -7,7 +7,7 @@ import "../node_modules/react-vis/dist/style.css";
 import {Offcanvas, Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 
-export default function App() {
+export default function History() {
   const dispatch = useDispatch();
   const graphData = useSelector(state => state.graphData)
     const [show, setShow] = useState(true);
@@ -73,11 +73,11 @@ export default function App() {
       <Col xs={12} >
           {StaticExample()}
           <h3 style={{...Styles.BootstrapCenter, marginTop:"2.5rem"}}>Temperature</h3>
-          <ResponsivePlot width={0.8} height={.225} isMobile={false} data={graphData.temperature} />
+          <ResponsivePlot width={0.8} height={.2} isMobile={false} data={graphData.temperature} />
           <h3 style={Styles.BootstrapCenter}>Oxygen</h3>
-          <ResponsivePlot width={0.8} height={.225} isMobile={false} data={graphData.oxygen} />
+          <ResponsivePlot width={0.8} height={.2} isMobile={false} data={graphData.oxygen} />
           <h3 style={Styles.BootstrapCenter}>Humidity</h3>
-          <ResponsivePlot width={0.8} height={.225} isMobile={false} data={graphData.humidity} />
+          <ResponsivePlot width={0.8} height={.2} isMobile={false} data={graphData.humidity} />
           {renderDateButtons()}
       </Col>
     </div>

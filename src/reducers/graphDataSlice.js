@@ -19,6 +19,25 @@ const loadDate = createAsyncThunk(
         return data;
     })
 
+const loadLive = createAsyncThunk(
+    'graphData/loadLive',
+    async (payload,thunkApi) => {
+        thunkApi.dispatch(graphDataSlice.actions.setLoading(true))
+        const state = thunkApi.getState();
+        let response = await fetch(
+            `https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": "live"}`,
+            {
+                headers: {
+                    "X-API-KEY": "629678a3c4d5c3756d35a40e",
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+            });
+
+        let data = await response.json();
+        return data;
+    })
+
 function getDateString(date) {
     const d = ("0" + date.getDate()).slice(-2)
     const m = ("0" + date.getMonth()).slice(-2)
@@ -29,6 +48,11 @@ const initialDate = new Date(2022, 1, 1)
 export const graphDataSlice = createSlice({
     name: "graphData",
     initialState: {
+        live:{
+            oxygen:0,
+            humidity:0,
+            temperature:0
+        },
         noData:false,
         loading:false,
         oxygen:[],
@@ -79,7 +103,14 @@ export const graphDataSlice = createSlice({
             });
             state.loading = false
         })
+        builder.addCase(loadLive.fulfilled, (state, action) => {
+            const rawData = action.payload["0"].data[0];
+            console.log(rawData)
+            state.live.temperature = rawData.temperature;
+            state.live.humidity = rawData.humidity;
+            state.live.oxygen = rawData.oxygen;
+        })
     }
 });
 export default graphDataSlice.reducer;
-export const graphDataActions = {...graphDataSlice.actions, loadDate}
+export const graphDataActions = {...graphDataSlice.actions, loadLive, loadDate}
