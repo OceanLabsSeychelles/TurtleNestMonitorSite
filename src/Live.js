@@ -29,7 +29,7 @@ export default function Live() {
                         <Card.Body style={{textAlign: 'center'}}>
                             <Card.Title><h2>Temperature</h2></Card.Title>
                             <Card.Text>
-                                <h4>{graphData.live.temperature.toFixed(1)}  deg C </h4>
+                                <h4>{graphData.live.temperature.toFixed(2)}  deg C </h4>
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -38,7 +38,7 @@ export default function Live() {
                     <Card.Body style={{textAlign: 'center'}}>
                         <Card.Title><h2>Oxygen</h2></Card.Title>
                         <Card.Text>
-                            <h4>{graphData.live.oxygen.toFixed(1)}  % </h4>
+                            <h4>{graphData.live.oxygen.toFixed(2)}  % </h4>
                         </Card.Text>
                     </Card.Body>
                 </Card>
@@ -47,7 +47,7 @@ export default function Live() {
                     <Card.Body style={{textAlign: 'center'}}>
                         <Card.Title><h2>Humidity</h2></Card.Title>
                         <Card.Text>
-                            <h4>{graphData.live.humidity.toFixed(1)}  % </h4>
+                            <h4>{graphData.live.humidity.toFixed(2)}  % </h4>
                         </Card.Text>
                     </Card.Body>
                 </Card>
