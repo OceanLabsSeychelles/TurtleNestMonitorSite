@@ -104,8 +104,8 @@ export const graphDataSlice = createSlice({
             state.loading = false
         })
         builder.addCase(loadLive.fulfilled, (state, action) => {
-            const rawData = action.payload["0"].data[0];
-            console.log(rawData)
+            const rawData = action.payload["0"].data;
+            console.log(action.payload["0"].data)
             state.live.temperature = rawData.temperature;
             state.live.humidity = rawData.humidity;
             state.live.oxygen = rawData.oxygen;

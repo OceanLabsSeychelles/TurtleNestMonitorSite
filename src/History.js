@@ -71,7 +71,6 @@ export default function History() {
   return (
     <div className="App" style={Styles.BootstrapCenter}>
       <Col xs={12} >
-          {StaticExample()}
           <h3 style={{...Styles.BootstrapCenter, marginTop:"2.5rem"}}>Temperature</h3>
           <ResponsivePlot width={0.8} height={.2} isMobile={false} data={graphData.temperature} />
           <h3 style={Styles.BootstrapCenter}>Oxygen</h3>
