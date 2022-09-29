@@ -19,7 +19,7 @@ export default function Live() {
         effect();
         setInterval(()=>{
             effect();
-        }, 10000)
+        }, 2000)
     }, []);
 
     return (
