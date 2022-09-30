@@ -23,7 +23,7 @@ export default function Live() {
     }, []);
 
     return (
-        <div className="App" style={Styles.BootstrapCenter}>
+        <div className="App" style={{...Styles.BootstrapCenter, height:"92vh",backgroundColor:"rgb(107,107,143)"}}>
             <Col xs={12} >
                     <Card className={'bg-light'} style={{padding:'1em',margin:'3em'}}>
                         <Card.Body style={{textAlign: 'center'}}>
