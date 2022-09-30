@@ -3,7 +3,7 @@ import React from "react";
 export default function Header() {
 
     return (
-        <Navbar bg="light" variant="light" expand="lg" style={{height:"10vh"}}>
+        <Navbar style={{height:"10vh"}}>
             <Container>
                 <Navbar.Brand href="/">
                     <img
