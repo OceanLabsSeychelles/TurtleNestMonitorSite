@@ -3,13 +3,13 @@ import React from "react";
 export default function Header() {
 
     return (
-        <Navbar bg="light" variant="light" expand="lg" style={{height:"8vh"}}>
+        <Navbar bg="light" variant="light" expand="lg" style={{height:"10vh"}}>
             <Container>
                 <Navbar.Brand href="/">
                     <img
                         src={"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fjobo.sc%2Fwp-content%2Fuploads%2F2019%2F03%2FNature_Seychelles_Logo_270px.png&f=1&nofb=1&ipt=416c280ffa82404a0523d9fe9bce58fcbd425f5f981786d606a672aea7188a22&ipo=images"}
-                        width="100"
-                        height="100"
+                        width="65"
+                        height="65"
                     />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
