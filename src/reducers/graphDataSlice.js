@@ -1,12 +1,50 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const loadAll = createAsyncThunk(
+    "graphData/loadAll",
+    async(payload, thunkApi) => {
+        let response = await fetch(
+            `https://sfasurf-8806.restdb.io/rest/tnmd?q={"$distinct": "date"}&totals=true&count=true`,
+            {
+                headers: {
+                    "X-API-KEY": "629678a3c4d5c3756d35a40e",
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                }
+            });
+
+        let data = await response.json();
+        console.log(data);
+        const pageSize= 1000;
+        const pageCount= Math.ceil(data.totals.count/pageSize);
+        const allData = []
+        for(let i=0;i<pageCount;i++){
+            const endIndex = pageSize*(i+1)>data.length?data.length:pageSize*(i+1)
+            console.log(pageSize*i,endIndex);
+            let page = await fetch(
+                `https://sfasurf-8806.restdb.io/rest/tnmd?skip=${pageSize*i}`,
+                {
+                    headers: {
+                        "X-API-KEY": "629678a3c4d5c3756d35a40e",
+                        Accept: "application/json",
+                        "Content-Type": "application/json"
+                    }
+                });
+            const entry = await page.json();
+            allData.push(entry);
+            console.log(entry);
+        }
+        return allData;
+    }
+)
+
 const loadDate = createAsyncThunk(
     'graphData/loadDate',
     async (payload,thunkApi) => {
         thunkApi.dispatch(graphDataSlice.actions.setLoading(true))
         const state = thunkApi.getState();
         let response = await fetch(
-            `https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": "${state.graphData.fetchableDate}"}`,
+            `https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": {"$regex" : "measurement-2022-11-07T12:*"}}`,
         {
         headers: {
             "X-API-KEY": "629678a3c4d5c3756d35a40e",
@@ -44,10 +82,13 @@ function getDateString(date) {
     return `${date.getFullYear()}-${m}-${d}`
 }
 const initialDate = new Date(2022, 1, 1)
+console.log(initialDate.toJSON());
 
 export const graphDataSlice = createSlice({
     name: "graphData",
     initialState: {
+        allData: [],
+        allLoaded: false,
         live:{
             oxygen:0,
             humidity:0,
@@ -86,6 +127,12 @@ export const graphDataSlice = createSlice({
         }
     },
     extraReducers:builder=> {
+        builder.addCase(loadAll.fulfilled,(state, action)=>{
+            state.allLoaded = true;
+            const measurements = action.payload.flat().filter(entry =>entry.date.includes("measurement"))
+            state.allData = measurements
+
+        })
         builder.addCase(loadDate.fulfilled, (state, action) => {
             if (action.payload["0"]?.data === undefined) {
                 state.loading = false;
@@ -105,7 +152,6 @@ export const graphDataSlice = createSlice({
         })
         builder.addCase(loadLive.fulfilled, (state, action) => {
             const rawData = action.payload["0"].data;
-            console.log(action.payload["0"].data)
             state.live.temperature = rawData.temperature;
             state.live.humidity = rawData.humidity;
             state.live.oxygen = rawData.oxygen;
@@ -113,4 +159,4 @@ export const graphDataSlice = createSlice({
     }
 });
 export default graphDataSlice.reducer;
-export const graphDataActions = {...graphDataSlice.actions, loadLive, loadDate}
+export const graphDataActions = {...graphDataSlice.actions, loadLive, loadDate, loadAll}

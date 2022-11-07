@@ -6,14 +6,38 @@ import {graphDataActions} from "./reducers/graphDataSlice";
 import "../node_modules/react-vis/dist/style.css";
 import {Offcanvas, Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
+import { CSVLink } from "react-csv";
 
 export default function History() {
-  const dispatch = useDispatch();
-  const graphData = useSelector(state => state.graphData)
-    const [show, setShow] = useState(true);
+    const dispatch = useDispatch();
+    const graphData = useSelector(state => state.graphData);
+    const [exportData, setExportData] = useState([]);
+    const headers = [
+        { label: "Date", key: "d" },
+        { label: "Oxygen", key: "o" },
+        { label: "Temperature", key: "t" },
+        { label: "Humidity", key: "h" },
+    ];
+
+    useEffect(() => {
+        if(graphData.allLoaded) {
+            const flat = graphData.allData.map(entry => {
+                return {
+                    d: entry.date.replace("measurement-", ""),
+                    o: entry.data.oxygen,
+                    t: entry.data.temperature,
+                    h: entry.data.humidity,
+                }
+            });
+            setExportData(flat)
+        }
+    }, [graphData.allData, graphData.allLoaded])
+
   useEffect(() => {
     async function effect() {
       dispatch(graphDataActions.loadDate());
+      dispatch(graphDataActions.loadAll());
+
     }
     effect();
   }, [graphData.date]);
@@ -44,33 +68,43 @@ export default function History() {
                         {">"}
                     </Button>
                 </ButtonGroup>
+
             </Row>
             </Col>
         )
     }
 
-    function StaticExample() {
-        return (
-            <Offcanvas show={graphData.noData} placement={"top"}>
-                <Offcanvas.Header style={{margin:"0rem"}}>
-                    <Offcanvas.Title>No Data Found</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                    <Col>
-                    <Row style={{margin:"2rem"}}>
-                    <Button
-                        onClick={()=>{dispatch(graphDataActions.setNoData(false))}}
-                        variant={"danger"}>Got it.</Button>
-                    </Row>
-                    </Col>
-                </Offcanvas.Body>
-            </Offcanvas>
-        );
+    function renderExportButton(){
+        if(exportData.length>0) {
+            return (
+                <CSVLink
+                    data={exportData}
+                    headers={headers}
+                    filename={`nestExport-${new Date().toJSON()}.csv`}
+                    className="btn btn-primary"
+                >
+                    Export All Data
+                </CSVLink>
+            )
+        }else{
+            return(
+                <div
+                    className="btn btn-primary"
+                >
+                    Export Data Loading...
+                </div>
+            )
+        }
     }
 
   return (
     <div className="App" style={Styles.BootstrapCenter}>
       <Col xs={12} >
+          <Row
+            style={{padding:'2rem'}}
+          >
+              {renderExportButton()}
+          </Row>
           <h3 style={{...Styles.BootstrapCenter, marginTop:"2.5rem"}}>Temperature</h3>
           <ResponsivePlot width={0.8} height={.2} isMobile={false} data={graphData.temperature} />
           <h3 style={Styles.BootstrapCenter}>Oxygen</h3>
