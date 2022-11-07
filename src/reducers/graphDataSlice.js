@@ -43,8 +43,10 @@ const loadDate = createAsyncThunk(
     async (payload,thunkApi) => {
         thunkApi.dispatch(graphDataSlice.actions.setLoading(true))
         const state = thunkApi.getState();
+        console.log(`https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": {"$regex" : "measurement-${state.graphData.fetchableDate}:*"}}`)
+
         let response = await fetch(
-            `https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": {"$regex" : "measurement-2022-11-07T12:*"}}`,
+            `https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": {"$regex" : "measurement-${state.graphData.fetchableDate}:*"}}&sort="date"`,
         {
         headers: {
             "X-API-KEY": "629678a3c4d5c3756d35a40e",
@@ -54,6 +56,7 @@ const loadDate = createAsyncThunk(
         });
 
         let data = await response.json();
+        console.log(data);
         return data;
     })
 
@@ -79,9 +82,9 @@ const loadLive = createAsyncThunk(
 function getDateString(date) {
     const d = ("0" + date.getDate()).slice(-2)
     const m = ("0" + date.getMonth()).slice(-2)
-    return `${date.getFullYear()}-${m}-${d}`
+    return `${date.getFullYear()}-${Number(m)+1}-${d}`
 }
-const initialDate = new Date(2022, 1, 1)
+const initialDate = new Date()
 console.log(initialDate.toJSON());
 
 export const graphDataSlice = createSlice({
@@ -139,15 +142,17 @@ export const graphDataSlice = createSlice({
                 state.noData = true;
                 return
             };
-            const rawData = action.payload["0"].data;
+            const rawData = action.payload;
             state.oxygen = [];
             state.temperature = [];
             state.humidity = [];
             rawData.forEach((point, index) => {
-                state.oxygen.push({ x: index, y: point.oxygen });
-                state.temperature.push({ x: index, y: point.temperature });
-                state.humidity.push({ x: index, y: point.humidity });
+                console.log(point);
+                state.oxygen.push({ x: index, y: point.data.oxygen });
+                state.temperature.push({ x: index, y: point.data.temperature });
+                state.humidity.push({ x: index, y: point.data.humidity });
             });
+            console.log(state.humidity)
             state.loading = false
         })
         builder.addCase(loadLive.fulfilled, (state, action) => {
