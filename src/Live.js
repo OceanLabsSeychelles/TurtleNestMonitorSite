@@ -9,6 +9,16 @@ import "bootstrap/dist/css/bootstrap.css";
 
 export default function Live() {
     const graphData = useSelector(state => state.graphData)
+    const [show, setShow] = useState(true);
+
+    useEffect(() => {
+        async function effect() {
+        }
+        effect();
+        setInterval(()=>{
+            effect();
+        }, 2000)
+    }, []);
 
     return (
         <div className="App" style={{...Styles.BootstrapCenter, height:"92vh",backgroundColor:"rgb(128,193,108)"}}>
