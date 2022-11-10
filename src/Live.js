@@ -8,11 +8,13 @@ import {Offcanvas, Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 
 export default function Live() {
+    const dispatch = useDispatch();
     const graphData = useSelector(state => state.graphData)
     const [show, setShow] = useState(true);
 
     useEffect(() => {
         async function effect() {
+            dispatch(graphData.loadLive)
         }
         effect();
         setInterval(()=>{

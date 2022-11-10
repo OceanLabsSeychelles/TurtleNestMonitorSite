@@ -56,7 +56,6 @@ const loadDate = createAsyncThunk(
         });
 
         let data = await response.json();
-        console.log(data);
         return data;
     })
 
@@ -146,14 +145,25 @@ export const graphDataSlice = createSlice({
             state.oxygen = [];
             state.temperature = [];
             state.humidity = [];
-            rawData.forEach((point, index) => {
-                console.log(point);
-                if(point.date.motion === 1)return;
-                state.oxygen.push({ x: index, y: point.data.oxygen });
-                state.temperature.push({ x: index, y: point.data.temperature });
-                state.humidity.push({ x: index, y: point.data.humidity });
+            console.log("Unsorted: ",rawData);
+
+            let sortedData = rawData.map(point=> {
+                point.date = new Date(point.date.replace("measurement-", ""));
+                return point;
+            })
+            sortedData.sort((a, b) => a.date>b.date)
+            console.log("Sorted: ",sortedData);
+
+            sortedData.forEach((point, index) => {
+                if(point.data.motion !== 1) {
+                    state.oxygen.push({x: index, y: point.data.oxygen});
+                    state.temperature.push({x: index, y: point.data.temperature});
+                    state.humidity.push({x: index, y: point.data.humidity});
+                }else{
+                    console.log("We got one!")
+                }
             });
-            console.log(state.humidity)
+            console.log("Humidity: ",state.humidity)
             state.loading = false
         })
         builder.addCase(loadLive.fulfilled, (state, action) => {
