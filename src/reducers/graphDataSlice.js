@@ -148,7 +148,7 @@ export const graphDataSlice = createSlice({
             state.humidity = [];
             rawData.forEach((point, index) => {
                 console.log(point);
-                if(point.data.motion ===1)return
+                if(point.date.motion === 1)return;
                 state.oxygen.push({ x: index, y: point.data.oxygen });
                 state.temperature.push({ x: index, y: point.data.temperature });
                 state.humidity.push({ x: index, y: point.data.humidity });
