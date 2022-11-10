@@ -101,6 +101,7 @@ export const graphDataSlice = createSlice({
         oxygen:[],
         temperature:[],
         humidity:[],
+        motion:[],
         battery:[],
         date: initialDate.toJSON(),
         fetchableDate: getDateString(initialDate)
@@ -156,11 +157,13 @@ export const graphDataSlice = createSlice({
 
             sortedData.forEach((point, index) => {
                 if(point.data.motion !== 1) {
-                    state.oxygen.push({x: index, y: point.data.oxygen});
-                    state.temperature.push({x: index, y: point.data.temperature});
-                    state.humidity.push({x: index, y: point.data.humidity});
+                    state.oxygen.push({x: point.date, y: point.data.oxygen});
+                    state.temperature.push({x: point.date, y: point.data.temperature});
+                    state.humidity.push({x: point.date, y: point.data.humidity});
+                    state.motion.push({x:point.date, y: 0});
+
                 }else{
-                    console.log("We got one!")
+                    state.motion.push({x:point.date, y: 1});
                 }
             });
             console.log("Humidity: ",state.humidity)

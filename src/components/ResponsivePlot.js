@@ -6,7 +6,9 @@ import {
   XAxis,
   YAxis,
   LineSeries,
-  Crosshair
+  Crosshair,
+  MarkSeries
+
 } from "react-vis";
 import { Row, Col } from "react-bootstrap";
 import Styles from "./Styles";
@@ -48,6 +50,7 @@ export default function ResponsivePlot(props) {
       <div style={Styles.BootstrapCenter} ref={myRef}>
         <Col style={Styles.BootstrapCenter} xs={12}>
           <XYPlot
+            xType="time"
             height={windowSize.height * props.height}
             width={windowSize.width * props.width}
             animation={modes[0]}
@@ -56,7 +59,8 @@ export default function ResponsivePlot(props) {
             <HorizontalGridLines />
             <XAxis />
             <YAxis />
-            <LineSeries
+            <MarkSeries
+                size={2}
               data={props.data}
               color={color}
               onNearestX={(value, event) => {
@@ -90,6 +94,7 @@ export default function ResponsivePlot(props) {
         </Col>
         <Col xs={10}>
           <XYPlot
+            xType="time"
             height={windowSize.height * props.height}
             width={windowSize.width * 0.7}
             animation={modes[0]}
@@ -98,7 +103,8 @@ export default function ResponsivePlot(props) {
             <HorizontalGridLines />
             <XAxis />
             <YAxis />
-            <LineSeries
+            <MarkSeries
+              size={2}
               data={props.data}
               color={color}
               onNearestX={(value, event) => {
