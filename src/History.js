@@ -36,11 +36,13 @@ export default function History() {
   useEffect(() => {
     async function effect() {
       dispatch(graphDataActions.loadDate());
-      dispatch(graphDataActions.loadAll());
-
     }
     effect();
   }, [graphData.date]);
+
+    useEffect(() => {
+        dispatch(graphDataActions.loadAll());
+    }, [])
 
     function renderDateButtons() {
         const ProbeVariant = (graphData.loading)?{state:"outline-primary"} : {state:"primary"}
@@ -89,7 +91,7 @@ export default function History() {
         }else{
             return(
                 <div
-                    className="btn btn-primary"
+                    className="btn btn-secondary"
                 >
                     Export Data Loading...
                 </div>
@@ -101,7 +103,7 @@ export default function History() {
     <div className="App" style={Styles.BootstrapCenter}>
       <Col xs={12} >
           <Row
-            style={{padding:'2rem'}}
+            style={{paddingLeft:"40%",paddingRight:"40%"}}
           >
               {renderExportButton()}
           </Row>
