@@ -14,7 +14,7 @@ export default function Live() {
 
     useEffect(() => {
         async function effect() {
-            dispatch(graphData.loadLive)
+            dispatch(graphDataActions.loadLive())
         }
         effect();
         setInterval(()=>{
