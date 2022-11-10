@@ -12,7 +12,6 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(
   <StrictMode>
     <Provider store={store}>
-        <ReducerLauncher>
             <Header/>
             <BrowserRouter>
                 <Routes>
@@ -21,7 +20,6 @@ ReactDOM.render(
                     <Route path="history" element={<History/>}/>
                 </Routes>
             </BrowserRouter>
-        </ReducerLauncher>
     </Provider>
   </StrictMode>,
   rootElement
