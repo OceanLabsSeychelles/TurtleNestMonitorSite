@@ -102,20 +102,20 @@ export default function History() {
   return (
     <div className="App" style={Styles.BootstrapCenter}>
       <Col xs={12} >
+          <h3 style={{...Styles.BootstrapCenter}}>Temperature</h3>
+          <ResponsivePlot width={0.8} height={.25} isMobile={false} data={graphData.temperature} />
+          <h3 style={Styles.BootstrapCenter}>Oxygen</h3>
+          <ResponsivePlot width={0.8} height={.25} isMobile={false} data={graphData.oxygen} />
+          <h3 style={Styles.BootstrapCenter}>Humidity</h3>
+          <ResponsivePlot width={0.8} height={.25} isMobile={false} data={graphData.humidity} />
+          <h3 style={Styles.BootstrapCenter}>Motion Events</h3>
+          <ResponsivePlot width={0.8} height={.25} isMobile={false} data={graphData.motion} />
+          {renderDateButtons()}
           <Row
-            style={{paddingLeft:"40%",paddingRight:"40%"}}
+              style={{paddingLeft:"30%",paddingRight:"30%",marginTop:"1rem"}}
           >
               {renderExportButton()}
           </Row>
-          <h3 style={{...Styles.BootstrapCenter, marginTop:"2.5rem"}}>Temperature</h3>
-          <ResponsivePlot width={0.8} height={.15} isMobile={false} data={graphData.temperature} />
-          <h3 style={Styles.BootstrapCenter}>Oxygen</h3>
-          <ResponsivePlot width={0.8} height={.15} isMobile={false} data={graphData.oxygen} />
-          <h3 style={Styles.BootstrapCenter}>Humidity</h3>
-          <ResponsivePlot width={0.8} height={.15} isMobile={false} data={graphData.humidity} />
-          <h3 style={Styles.BootstrapCenter}>Motion Events</h3>
-          <ResponsivePlot width={0.8} height={.15} isMobile={false} data={graphData.motion} />
-          {renderDateButtons()}
       </Col>
     </div>
   );
