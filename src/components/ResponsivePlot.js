@@ -7,7 +7,9 @@ import {
   YAxis,
   LineSeries,
   Crosshair,
-  MarkSeries
+  MarkSeries,
+  VerticalBarSeries,
+  LineMarkSeries
 
 } from "react-vis";
 import { Row, Col } from "react-bootstrap";
@@ -52,20 +54,20 @@ export default function ResponsivePlot(props) {
           <XYPlot
             xType="time"
             height={windowSize.height * props.height}
-            width={windowSize.width * props.width}
+            width={windowSize.width * 0.8}
             animation={modes[0]}
           >
             <VerticalGridLines />
             <HorizontalGridLines />
             <XAxis />
             <YAxis />
-            <MarkSeries
+            <LineMarkSeries
                 size={2}
-              data={props.data}
-              color={color}
-              onNearestX={(value, event) => {
-                setCrosshairData({ x: value.x, y: value.y.toFixed(3) });
-              }}
+                data={props.data}
+                color={color}
+                onNearestX={(value, event) => {
+                  setCrosshairData({ x: value.x, y: value.y.toFixed(3) });
+                }}
             />
             <Crosshair>
               <div
@@ -94,6 +96,7 @@ export default function ResponsivePlot(props) {
         </Col>
         <Col xs={10}>
           <XYPlot
+            size={2}
             xType="time"
             height={windowSize.height * props.height}
             width={windowSize.width * 0.7}
@@ -103,13 +106,13 @@ export default function ResponsivePlot(props) {
             <HorizontalGridLines />
             <XAxis />
             <YAxis />
-            <MarkSeries
-              size={2}
-              data={props.data}
-              color={color}
-              onNearestX={(value, event) => {
-                setCrosshairData({ x: value.x, y: value.y });
-              }}
+            <LineMarkSeries
+                size={2}
+                data={props.data}
+                color={color}
+                onNearestX={(value, event) => {
+                  setCrosshairData({ x: value.x, y: value.y.toFixed(3) });
+                }}
             />
           </XYPlot>
         </Col>

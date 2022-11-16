@@ -109,7 +109,7 @@ export default function History() {
           <h3 style={Styles.BootstrapCenter}>Humidity</h3>
           <ResponsivePlot width={0.8} height={.25} isMobile={false} data={graphData.humidity} />
           <h3 style={Styles.BootstrapCenter}>Motion Events</h3>
-          <ResponsivePlot width={0.8} height={.25} isMobile={false} data={graphData.motion} />
+          <ResponsivePlot width={0.8} height={.25} isMobile={false} data={graphData.motion}/>
           {renderDateButtons()}
           <Row
               style={{paddingLeft:"30%",paddingRight:"30%",marginTop:"1rem"}}
