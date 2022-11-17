@@ -61,8 +61,8 @@ export default function ResponsivePlot(props) {
             <HorizontalGridLines />
             <XAxis />
             <YAxis />
-            <LineMarkSeries
-                size={2}
+            <MarkSeries
+                size={4}
                 data={props.data}
                 color={color}
                 onNearestX={(value, event) => {
@@ -96,7 +96,7 @@ export default function ResponsivePlot(props) {
         </Col>
         <Col xs={10}>
           <XYPlot
-            size={2}
+            size={4}
             xType="time"
             height={windowSize.height * props.height}
             width={windowSize.width * 0.7}
@@ -106,8 +106,8 @@ export default function ResponsivePlot(props) {
             <HorizontalGridLines />
             <XAxis />
             <YAxis />
-            <LineMarkSeries
-                size={2}
+            <MarkSeries
+                size={5}
                 data={props.data}
                 color={color}
                 onNearestX={(value, event) => {
