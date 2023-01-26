@@ -1,14 +1,14 @@
-import {useEffect,useState} from "react";
-import { useSelector, useDispatch } from "react-redux";
+import "bootstrap/dist/css/bootstrap.css";
+import { useEffect, useState } from "react";
+import { Button, ButtonGroup, Col, Row } from "react-bootstrap";
+import { CSVLink } from "react-csv";
+import { useDispatch, useSelector } from "react-redux";
+import "../node_modules/react-vis/dist/style.css";
 import ResponsivePlot from "./components/ResponsivePlot";
 import Styles from "./components/Styles";
-import {graphDataActions} from "./reducers/graphDataSlice";
-import "../node_modules/react-vis/dist/style.css";
-import {Offcanvas, Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.css";
-import { CSVLink } from "react-csv";
+import { graphDataActions } from "./reducers/graphDataSlice";
 
-export default function History() {
+export default function HistoryNEST() {
     const dispatch = useDispatch();
     const graphData = useSelector(state => state.graphData);
     const [exportData, setExportData] = useState([]);

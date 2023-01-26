@@ -1,13 +1,12 @@
-import {useEffect,useState} from "react";
-import { useSelector, useDispatch } from "react-redux";
-import ResponsivePlot from "./components/ResponsivePlot";
-import Styles from "./components/Styles";
-import {graphDataActions} from "./reducers/graphDataSlice";
-import "../node_modules/react-vis/dist/style.css";
-import {Offcanvas, Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
+import { useEffect, useState } from "react";
+import { Card, Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import "../node_modules/react-vis/dist/style.css";
+import Styles from "./components/Styles";
+import { graphDataActions } from "./reducers/graphDataSlice";
 
-export default function Live() {
+export default function LiveNEST() {
     const dispatch = useDispatch();
     const graphData = useSelector(state => state.graphData)
     const [show, setShow] = useState(true);

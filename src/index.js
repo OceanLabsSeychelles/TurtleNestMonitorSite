@@ -1,12 +1,11 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
-import store from "./store";
 import { Provider } from "react-redux";
-import History from "./History";
-import Header from "./components/Header"
-import Live from "./Live"
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import ReducerLauncher from "./components/ReducerLauncher";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import History from "./HistoryNEST";
+import LiveNEST from "./LiveNEST";
+import Header from "./components/Header";
+import store from "./store";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
@@ -15,8 +14,8 @@ ReactDOM.render(
             <Header/>
             <BrowserRouter>
                 <Routes>
-                    <Route index element={<Live/>}/>
-                    <Route path="live" element={<Live/>}/>
+                    <Route index element={<LiveNEST/>}/>
+                    <Route path="live" element={<LiveNEST/>}/>
                     <Route path="history" element={<History/>}/>
                 </Routes>
             </BrowserRouter>
