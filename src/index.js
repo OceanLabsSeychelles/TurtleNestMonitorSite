@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HistoryDREAM from "./HistoryDREAM";
 import HistoryNEST from "./HistoryNEST";
 import LiveDREAM from "./LiveDREAM";
 import LiveNEST from "./LiveNEST";
