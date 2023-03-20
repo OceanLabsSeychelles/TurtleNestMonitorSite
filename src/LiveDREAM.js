@@ -24,15 +24,23 @@ export default function LiveDREAM() {
     return (
         <div className="App" style={{...Styles.BootstrapCenter, height:"92vh",backgroundColor:"rgb(128,193,108)"}}>
             <Col xs={12} >
-                DREAM Live Data
-                    <Card className={'bg-light'} style={{padding:'1em',margin:'3em'}}>
+
+                <Card className={'bg-light'} style={{padding:'1em',margin:'3em'}}>
+                    <Card.Body style={{textAlign: 'center'}}>
+                        <Card.Title><h2>DREAM Live Data</h2></Card.Title>
+                        <Card.Text>
+                        </Card.Text>
+                        </Card.Body>
+                </Card>
+                
+                <Card className={'bg-light'} style={{padding:'1em',margin:'3em'}}>
                         <Card.Body style={{textAlign: 'center'}}>
                             <Card.Title><h2>Temperature</h2></Card.Title>
                             <Card.Text>
                                 <h4>{graphData.live.temperature.toFixed(2)}  deg C </h4>
                             </Card.Text>
                         </Card.Body>
-                    </Card>
+                </Card>
 
                 <Card className={'bg-light'} style={{padding:'1em',margin:'3em'}}>
                     <Card.Body style={{textAlign: 'center'}}>
