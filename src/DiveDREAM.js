@@ -1,3 +1,6 @@
+//Displays data for a single dive
+//Pulls data for a single dive ID
+
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
 import { Button, ButtonGroup, Col, Row } from "react-bootstrap";
@@ -8,7 +11,7 @@ import ResponsivePlot from "./components/ResponsivePlot";
 import Styles from "./components/Styles";
 import { graphDataActions } from "./reducers/graphDataSlice";
 
-export default function HistoryDREAM() {
+export default function DiveDREAM() {
     const dispatch = useDispatch();
     const graphData = useSelector(state => state.graphData);
     const [exportData, setExportData] = useState([]);

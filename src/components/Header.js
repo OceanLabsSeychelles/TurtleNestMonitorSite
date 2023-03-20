@@ -18,8 +18,8 @@ export default function Header() {
                     <Nav className="me-auto">
                         <Nav.Link style={{textAlign:'center'}} href="/liveNEST">NEST Live Data</Nav.Link>
                         <Nav.Link style={{textAlign:'center'}} href="/historyNEST">NEST Historical Data</Nav.Link>
-                        <Nav.Link style={{textAlign:'center'}} href="/liveDREAM">DREAM Live Data</Nav.Link>
-                        <Nav.Link style={{textAlign:'center'}} href="/historyDREAM">DREAM Historical Data</Nav.Link>
+                        <Nav.Link style={{textAlign:'center'}} href="/mapDREAM">DREAM Dive Map</Nav.Link>
+                        <Nav.Link style={{textAlign:'center'}} href="/diveDREAM">DREAM Dive Data</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

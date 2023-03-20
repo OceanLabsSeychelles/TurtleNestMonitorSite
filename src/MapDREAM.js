@@ -1,3 +1,6 @@
+//Map display of dives for the DREAM device
+//Displays dives for a certain date by pulling the coordinates for that day's dives and sorting them according to the dive IDs
+
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
 import { Card, Col } from "react-bootstrap";
@@ -6,7 +9,7 @@ import "../node_modules/react-vis/dist/style.css";
 import Styles from "./components/Styles";
 import { graphDataActions } from "./reducers/graphDataSlice";
 
-export default function LiveDREAM() {
+export default function MapDREAM() {
     const dispatch = useDispatch();
     const graphData = useSelector(state => state.graphData)
     const [show, setShow] = useState(true);
