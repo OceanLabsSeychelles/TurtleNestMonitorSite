@@ -2,7 +2,8 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import History from "./HistoryNEST";
+import HistoryNEST from "./HistoryNEST";
+import LiveDREAM from "./LiveDREAM";
 import LiveNEST from "./LiveNEST";
 import Header from "./components/Header";
 import store from "./store";
@@ -15,8 +16,10 @@ ReactDOM.render(
             <BrowserRouter>
                 <Routes>
                     <Route index element={<LiveNEST/>}/>
-                    <Route path="live" element={<LiveNEST/>}/>
-                    <Route path="history" element={<History/>}/>
+                    <Route path="liveNEST" element={<LiveNEST/>}/>
+                    <Route path="historyNEST" element={<HistoryNEST/>}/>
+                    <Route path="liveDREAM" element={<LiveDREAM/>}/>
+                    <Route path="historyDREAM" element={<HistoryDREAM/>}/>
                 </Routes>
             </BrowserRouter>
     </Provider>

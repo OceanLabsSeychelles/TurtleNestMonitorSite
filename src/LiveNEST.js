@@ -24,6 +24,7 @@ export default function LiveNEST() {
     return (
         <div className="App" style={{...Styles.BootstrapCenter, height:"92vh",backgroundColor:"rgb(128,193,108)"}}>
             <Col xs={12} >
+                NEST Live Data
                     <Card className={'bg-light'} style={{padding:'1em',margin:'3em'}}>
                         <Card.Body style={{textAlign: 'center'}}>
                             <Card.Title><h2>Temperature</h2></Card.Title>
