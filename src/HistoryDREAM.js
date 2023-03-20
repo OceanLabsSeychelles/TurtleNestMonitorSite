@@ -8,7 +8,7 @@ import ResponsivePlot from "./components/ResponsivePlot";
 import Styles from "./components/Styles";
 import { graphDataActions } from "./reducers/graphDataSlice";
 
-export default function HistoryNEST() {
+export default function HistoryDREAM() {
     const dispatch = useDispatch();
     const graphData = useSelector(state => state.graphData);
     const [exportData, setExportData] = useState([]);
