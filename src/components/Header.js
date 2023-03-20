@@ -16,10 +16,10 @@ export default function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link style={{textAlign:'center'}} href="/live">NEST Live Data</Nav.Link>
-                        <Nav.Link style={{ textAlign: 'center' }} href="/history">NEST Historical Data</Nav.Link>
-                        <Nav.Link style={{textAlign:'center'}} href="/live">NEST Live Data</Nav.Link>
-                        <Nav.Link style={{textAlign:'center'}} href="/history">NEST Historical Data</Nav.Link>
+                        <Nav.Link style={{textAlign:'center'}} href="/liveNEST">NEST Live Data</Nav.Link>
+                        <Nav.Link style={{ textAlign: 'center' }} href="/historyNEST">NEST Historical Data</Nav.Link>
+                        <Nav.Link style={{textAlign:'center'}} href="/liveDREAM">DREAM Live Data</Nav.Link>
+                        <Nav.Link style={{textAlign:'center'}} href="/historyDREAM">DREAM Historical Data</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
