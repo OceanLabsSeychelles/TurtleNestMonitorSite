@@ -22,7 +22,7 @@ export default function LiveDREAM() {
     }, []);
 
     return (
-        <div className="App" style={{...Styles.BootstrapCenter, height:"92vh",backgroundColor:"rgb(128,193,108)"}}>
+        <div className="App" style={{...Styles.BootstrapCenter, height:"92vh",backgroundColor:"rgb(0,0,108)"}}>
             <Col xs={12} >
                 <Card className={'bg-light'} style={{padding:'1em',margin:'3em'}}>
                     <Card.Body style={{textAlign: 'center'}}>
