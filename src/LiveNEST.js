@@ -4,7 +4,7 @@ import { Card, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import "../node_modules/react-vis/dist/style.css";
 import Styles from "./components/Styles";
-import { graphDataActions } from "./reducers/graphDataSlice";
+import { graphDataActions } from "./reducers/graphDataSliceNEST";
 
 export default function LiveNEST() {
     const dispatch = useDispatch();
