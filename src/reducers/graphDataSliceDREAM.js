@@ -4,7 +4,7 @@ const loadAll = createAsyncThunk(
     "graphData/loadAll",
     async(payload, thunkApi) => {
         let response = await fetch(
-            `https://sfasurf-8806.restdb.io/rest/dream?q={"$distinct": "date"}&totals=true&count=true`,
+            `https://sfasurf-8806.restdb.io/rest/tnmd?q={"$distinct": "date"}&totals=true&count=true`,
             {
                 headers: {
                     "X-API-KEY": "629678a3c4d5c3756d35a40e",
@@ -22,7 +22,7 @@ const loadAll = createAsyncThunk(
             const endIndex = pageSize*(i+1)>data.length?data.length:pageSize*(i+1)
             console.log(pageSize*i,endIndex);
             let page = await fetch(
-                `https://sfasurf-8806.restdb.io/rest/dream?skip=${pageSize*i}`,
+                `https://sfasurf-8806.restdb.io/rest/tnmd?skip=${pageSize*i}`,
                 {
                     headers: {
                         "X-API-KEY": "629678a3c4d5c3756d35a40e",
@@ -43,10 +43,10 @@ const loadDate = createAsyncThunk(
     async (payload,thunkApi) => {
         thunkApi.dispatch(graphDataSlice.actions.setLoading(true))
         const state = thunkApi.getState();
-        console.log(`https://sfasurf-8806.restdb.io/rest/dream?q={"date": {"$regex" : "measurement-${state.graphData.fetchableDate}:*"}}`)
+        console.log(`https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": {"$regex" : "measurement-${state.graphData.fetchableDate}:*"}}`)
 
         let response = await fetch(
-            `https://sfasurf-8806.restdb.io/rest/dream?q={"date": {"$regex" : "measurement-${state.graphData.fetchableDate}:*"}}&sort="date"`,
+            `https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": {"$regex" : "measurement-${state.graphData.fetchableDate}:*"}}&sort="date"`,
         {
         headers: {
             "X-API-KEY": "629678a3c4d5c3756d35a40e",
@@ -65,7 +65,7 @@ const loadLive = createAsyncThunk(
         thunkApi.dispatch(graphDataSlice.actions.setLoading(true))
         const state = thunkApi.getState();
         let response = await fetch(
-            `https://sfasurf-8806.restdb.io/rest/dream?q={"date": "live"}`,
+            `https://sfasurf-8806.restdb.io/rest/tnmd?q={"date": "live"}`,
             {
                 headers: {
                     "X-API-KEY": "629678a3c4d5c3756d35a40e",
