@@ -5,7 +5,7 @@ import graphDataSliceNEST from "./reducers/graphDataSliceNEST";
 
 export default configureStore({
   reducer: {
-    graphDataNEST: graphDataSliceNEST,
+    graphData: graphDataSliceNEST,
     graphDataDREAM: graphDataSliceDREAM,
   }
 });
