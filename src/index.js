@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';import History from "./History";
+import { Provider } from 'react-redux';import History from "./pages/History";
 import Header from "./components/Header"
-import Live from "./Live"
+import Live from "./pages/Live"
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import DiveMap from "./pages/DiveMap";
 import SessionMap from "./pages/SessionMap";

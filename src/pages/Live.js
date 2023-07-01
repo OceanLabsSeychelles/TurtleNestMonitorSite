@@ -1,8 +1,8 @@
 import {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Styles from "./components/Styles";
-import {graphDataActions} from "./reducers/graphDataSlice";
-import "../node_modules/react-vis/dist/style.css";
+import Styles from "../components/Styles";
+import {graphDataActions} from "../reducers/graphDataSlice";
+import "react-vis/dist/style.css";
 import {Card, Col} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 const {useNavigate} = require("react-router-dom");

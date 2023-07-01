@@ -18,8 +18,8 @@ export default function Header() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link style={{textAlign: 'center'}} href="/dives">Dive Record</Nav.Link>
-                            <Nav.Link style={{textAlign: 'center'}} href="/live">Live Data</Nav.Link>
-                            <Nav.Link style={{textAlign: 'center'}} href="/history">Historical Data</Nav.Link>
+                            <Nav.Link style={{textAlign: 'center'}} href="/live">NEST-Live</Nav.Link>
+                            <Nav.Link style={{textAlign: 'center'}} href="/history">NEST-History</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

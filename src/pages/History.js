@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import ResponsivePlot from "./components/ResponsivePlot";
-import Styles from "./components/Styles";
-import {graphDataActions} from "./reducers/graphDataSlice";
-import "../node_modules/react-vis/dist/style.css";
+import ResponsivePlot from "../components/ResponsivePlot";
+import Styles from "../components/Styles";
+import {graphDataActions} from "../reducers/graphDataSlice";
+import "react-vis/dist/style.css";
 import {Offcanvas, Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import {CSVLink} from "react-csv";

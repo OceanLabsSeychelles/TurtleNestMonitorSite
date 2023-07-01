@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import { Form, Button, Card, Container } from 'react-bootstrap';
 import Styles from "../components/Styles";
 import { useDispatch } from "react-redux";
 import {login} from "../reducers/authSlice";
 function Login() {
+    const loggedIn = useSelector(state => state.auth.loggedIn);
     const users = JSON.parse(process.env.REACT_APP_USERS);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,6 +26,12 @@ function Login() {
             alert("Invalid credentials.");
         }
     };
+
+    useEffect(() => {
+        if(loggedIn){
+            navigate("/dives");
+        }
+    }, [])
 
 
     return (
