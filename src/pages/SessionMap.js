@@ -15,7 +15,7 @@ export default function SessionMap(){
     const navigate = useNavigate();
     const session = useSelector(state => state.session)
     const loggedIn = useSelector(state => state.auth.loggedIn)
-    
+
     useEffect(() => {
         if(!loggedIn){
             navigate("/login");

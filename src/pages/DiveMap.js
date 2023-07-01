@@ -5,11 +5,11 @@ import {useEffect, useRef, useState} from "react";
 import {Button, Col, Row} from "react-bootstrap";
 import {MapContainer} from 'react-leaflet/MapContainer';
 import {TileLayer} from 'react-leaflet/TileLayer';
-import {Marker} from 'react-leaflet/Marker';
 import {CircleMarker} from "react-leaflet";
 import Styles from "../components/Styles";
 import {useNavigate} from 'react-router-dom';
 import {Grid} from 'react-loader-spinner';
+import FadeIn from "../components/FadeIn";
 import "./leaflet.css";
 export default function DiveMap() {
     const [highlighted, setHighlighted] = useState(null);
@@ -59,25 +59,36 @@ export default function DiveMap() {
     const RenderDives = () => {
         const clusters = clusterDives(dives.records);
         return (
-            <Row className="justify-content-between" style={{ margin: ".5rem", width: '90%', alignItems: "flex-start" }}>
+            <Row
+                 style={{justifyContent: "center"}}
+            >
                 {Object.values(clusters).map((cluster,index) => (
                     cluster.dives.map((dive) => {
                         const dateObject = new Date(dive.datetime);
                         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
                         const formattedDate = dateObject.toLocaleString('en-US', options);
                         return (
-                            <Button
-                                variant={"dark"}
-                                disabled={session.status === "loading"}
+                            <div
+                                key={dive.sessionId}
+                                // disabled={session.status === "loading"}
                                 onClick={async () => {
+                                    if(session.status === "loading") return;
                                     await dispatch(fetchSession(dive.sessionId));
                                     navigate("/session")
                                 }}
-                                style={{ margin: ".5rem", backgroundColor: `hsl(${360-index*60} 60% 40%)` }}
-                                key={dive.sessionId}
+                                style={{
+                                    margin: ".5rem",
+                                    padding:"0.5rem",
+                                    borderRadius:"5px",
+                                    borderWidth:"2px",
+                                    borderStyle:"solid",
+                                    borderColor:session.status==="loading"?`hsl(${360-index*60} 60% 90%)`:`hsl(${360-index*60} 60% 40%)`,
+                                    backgroundColor:session.status==="loading"?`hsl(${360-index*60} 60% 95%)`:`hsl(${360-index*60} 60% 90%)`,
+                                    width:"60%",
+                                }}
                             >
                                 {formattedDate} ({Number(dive.lat).toFixed(6)}, {Number(dive.lon).toFixed(6)})
-                            </Button>
+                            </div>
                         )
                     })
                 ))}
@@ -142,20 +153,21 @@ export default function DiveMap() {
             {dives.status === "succeeded" &&
                 <>
                     <Col>
+                        <FadeIn>
                         <Row
                         style={{
-                            height:'85vh',
+                            height:'82vh',
                             width:"100%",
                             overflowY: 'scroll',
                             alignItems:'center',
                             justifyContent:'center',
                         }}
-                    >
+                        >
                         <RenderDives/>
                         </Row>
                         <Row style={{ alignItems:'center', justifyContent:'center',}}>
                         <Button
-                            variant={"outline-success"}
+                            variant={"success"}
                             style={{width:"50%"}}
                             onClick={()=>{
                                 dispatch(queryDives())
@@ -164,9 +176,12 @@ export default function DiveMap() {
                             Re-Load Dives
                         </Button>
                         </Row>
+                        </FadeIn>
                     </Col>
                     <Col>
-                        <RenderMap/>
+                        <FadeIn>
+                            <RenderMap/>
+                        </FadeIn>
                     </Col>
                 </>
             }
