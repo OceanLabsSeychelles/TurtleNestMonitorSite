@@ -4,6 +4,7 @@ import { Form, Button, Card, Container } from 'react-bootstrap';
 import Styles from "../components/Styles";
 import { useDispatch, useSelector } from "react-redux";
 import {login} from "../reducers/authSlice";
+import FadeIn from "../components/FadeIn";
 function Login() {
     const loggedIn = useSelector(state => state.auth.loggedIn);
     const users = JSON.parse(process.env.REACT_APP_USERS);
@@ -36,6 +37,7 @@ function Login() {
 
     return (
         <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
+            <FadeIn>
             <Card className="w-100" style={{ maxWidth: "400px" }}>
                 <Card.Body>
                     <div
@@ -61,6 +63,7 @@ function Login() {
                     </Form>
                 </Card.Body>
             </Card>
+            </FadeIn>
         </Container>
     );
 }
