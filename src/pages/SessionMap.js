@@ -12,18 +12,18 @@ import Styles from "../components/Styles";
 import {useNavigate} from "react-router-dom";
 
 export default function SessionMap(){
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     const session = useSelector(state => state.session)
     const loggedIn = useSelector(state => state.auth.loggedIn)
-    if(!loggedIn){
-        navigate("/login");
-        return <></>;
-    };
-
-    // useEffect(() => {
-    //     dispatch(queryDives());
-    // }, [])
+    
+    useEffect(() => {
+        if(!loggedIn){
+            navigate("/login");
+        }
+        if(session.status !== "succeeded"){
+            navigate("/dives")
+        }
+    }, [])
 
     function timeSeries(key) {
         return session.records.map(obj => {

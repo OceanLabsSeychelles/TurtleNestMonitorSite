@@ -22,10 +22,11 @@ export default function History() {
         {label: "Humidity", key: "h"},
     ];
 
-    if(!loggedIn){
-        navigate("/login");
-        return <></>;
-    };
+    useEffect(() => {
+        if(!loggedIn){
+            navigate("/login");
+        }
+    }, [])
 
     useEffect(() => {
         if (graphData.allLoaded) {

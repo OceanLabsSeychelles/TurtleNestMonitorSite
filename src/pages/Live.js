@@ -12,10 +12,11 @@ export default function Live() {
     const dispatch = useDispatch();
     const graphData = useSelector(state => state.graphData)
     const loggedIn = useSelector(state => state.auth.loggedIn)
-    if(!loggedIn){
-        navigate("/login");
-        return <></>;
-    };
+    useEffect(() => {
+        if(!loggedIn){
+            navigate("/login");
+        }
+    }, [])
 
     useEffect(() => {
         async function effect() {

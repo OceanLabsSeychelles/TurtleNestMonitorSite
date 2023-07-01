@@ -57,7 +57,7 @@ function Login() {
                             <Form.Control type="password" required value={password} onChange={e => setPassword(e.target.value)} />
                         </Form.Group>
                         <br />
-                        <Button className="w-100" type="submit">Log In</Button>
+                        <Button variant="success" className="w-100" type="submit">Log In</Button>
                     </Form>
                 </Card.Body>
             </Card>

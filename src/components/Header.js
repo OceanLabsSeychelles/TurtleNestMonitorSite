@@ -1,7 +1,10 @@
 import {Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import React from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useStore} from "react-redux";
+import {Button} from "react-bootstrap";
+import {logout} from "../reducers/authSlice";
 export default function Header() {
+    const dispatch = useStore().dispatch;
     const loggedIn = useSelector((state) => state.auth.loggedIn);
     if (loggedIn) {
         return (
@@ -22,6 +25,9 @@ export default function Header() {
                             <Nav.Link style={{textAlign: 'center'}} href="/history">NEST-History</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
+                    <Nav.Link onClick={()=>{
+                        dispatch(logout());
+                    }} style={{textAlign: 'center'}} href="/">Sign Out</Nav.Link>
                 </Container>
             </Navbar>
         );
