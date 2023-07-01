@@ -68,7 +68,7 @@ export default function DiveMap() {
                         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
                         const formattedDate = dateObject.toLocaleString('en-US', options);
                         return (
-                            <div
+                            <label
                                 key={dive.sessionId}
                                 // disabled={session.status === "loading"}
                                 onClick={async () => {
@@ -77,6 +77,7 @@ export default function DiveMap() {
                                     navigate("/session")
                                 }}
                                 style={{
+                                    cursor:"pointer",
                                     margin: ".5rem",
                                     padding:"0.5rem",
                                     borderRadius:"5px",
@@ -88,7 +89,7 @@ export default function DiveMap() {
                                 }}
                             >
                                 {formattedDate} ({Number(dive.lat).toFixed(6)}, {Number(dive.lon).toFixed(6)})
-                            </div>
+                            </label>
                         )
                     })
                 ))}
