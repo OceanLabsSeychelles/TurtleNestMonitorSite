@@ -5,12 +5,8 @@ import {
   HorizontalGridLines,
   XAxis,
   YAxis,
-  LineSeries,
   Crosshair,
   MarkSeries,
-  VerticalBarSeries,
-  LineMarkSeries
-
 } from "react-vis";
 import { Row, Col } from "react-bootstrap";
 import Styles from "./Styles";
@@ -52,14 +48,14 @@ export default function ResponsivePlot(props) {
       <div style={Styles.BootstrapCenter} ref={myRef}>
         <Col style={Styles.BootstrapCenter} xs={12}>
           <XYPlot
-            xType="time"
+            xType={props.xType}
             height={windowSize.height * props.height}
-            width={windowSize.width * 0.8}
+            width={windowSize.width * props.width}
             animation={modes[0]}
           >
             <VerticalGridLines />
             <HorizontalGridLines />
-            <XAxis />
+            <XAxis title={props.xtitle}/>
             <YAxis />
             <MarkSeries
                 size={4}
@@ -96,10 +92,10 @@ export default function ResponsivePlot(props) {
         </Col>
         <Col xs={10}>
           <XYPlot
+            xType={props.xType}
             size={4}
-            xType="time"
             height={windowSize.height * props.height}
-            width={windowSize.width * 0.7}
+            width={windowSize.width * props.width}
             animation={modes[0]}
           >
             <VerticalGridLines />

@@ -1,21 +1,27 @@
-import {useEffect,useState} from "react";
+import {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import ResponsivePlot from "./components/ResponsivePlot";
 import Styles from "./components/Styles";
 import {graphDataActions} from "./reducers/graphDataSlice";
 import "../node_modules/react-vis/dist/style.css";
-import {Offcanvas, Button, ButtonGroup, Card, Col, Row} from "react-bootstrap";
+import {Card, Col} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
+const {useNavigate} = require("react-router-dom");
 
 export default function Live() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const graphData = useSelector(state => state.graphData)
-    const [show, setShow] = useState(true);
+    const loggedIn = useSelector(state => state.auth.loggedIn)
+    if(!loggedIn){
+        navigate("/login");
+        return <></>;
+    };
 
     useEffect(() => {
         async function effect() {
             dispatch(graphDataActions.loadLive())
         }
+
         effect();
         setInterval(()=>{
             effect();

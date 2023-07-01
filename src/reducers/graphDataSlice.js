@@ -83,7 +83,7 @@ function getDateString(date) {
     const m = ("0" + date.getMonth()).slice(-2)
     return `${date.getFullYear()}-${Number(m)+1}-${d}`
 }
-const initialDate = new Date()
+const initialDate = new Date("11/28/2022")
 console.log(initialDate.toJSON());
 
 export const graphDataSlice = createSlice({
