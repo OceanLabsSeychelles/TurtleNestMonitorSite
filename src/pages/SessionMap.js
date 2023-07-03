@@ -10,11 +10,28 @@ import {Popup} from "react-leaflet";
 import "./leaflet.css";
 import Styles from "../components/Styles";
 import {useNavigate} from "react-router-dom";
+import {CSVLink} from "react-csv";
 
 export default function SessionMap(){
     const navigate = useNavigate();
     const session = useSelector(state => state.session)
     const loggedIn = useSelector(state => state.auth.loggedIn)
+    const csvHeaders = [
+        {label: "Index", key:"recordIndex"},
+        {label: "Time", key: "datetime"},
+        {label: "Runtime", key: "runtime"},
+        {label: "Latitude", key: "lat"},
+        {label: "Longitude", key: "lon"},
+        {label: "Temperature", key: "temperature"},
+        {label: "pH", key: "ph"},
+        {label: "Dissolved Oxygen", key: "do"},
+        {label: "Light", key: "light"},
+        {label: "Depth", key: "depth"},
+        {label: "Pressure", key: "pressure"},
+        {label: "GPS Fix", key: "fix"},
+        {label: "GPS Sats", key: "sats"},
+    ];
+
 
     useEffect(() => {
         if(!loggedIn){
@@ -47,7 +64,19 @@ export default function SessionMap(){
 
     return(
         <Row>
-            <h5>{date.toString()}</h5>
+            <CSVLink
+                style={{
+                    borderWidth:"0px",
+
+                }}
+                className="btn btn-outline-success"
+                data={session.records}
+                headers={csvHeaders}
+                filename={`dreamExport-${new Date().toJSON()}.csv`}
+            >
+                Export : {date.toString()}
+
+            </CSVLink>
             <Col style={Styles.BootstrapCenter}>
                 <MapContainer center={[ingress.lat, ingress.lon]} zoom={18} maxZoom={25} scrollWheelZoom={false}>
                     <TileLayer
@@ -94,6 +123,7 @@ export default function SessionMap(){
             <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Oxygen</h3>
                 <ResponsivePlot width={0.45} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={timeSeries("do")} />
                 {/*<ResponsivePlot width={0.4} height={.25} xtitle="Depth(m)" isMobile={false} xType={"ordinal"} data={depthSeries("do")} />*/}
+
             </Col>
         </Row>
     )
