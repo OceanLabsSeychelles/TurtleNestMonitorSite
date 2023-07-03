@@ -19,7 +19,6 @@ export default function ResponsivePlot(props) {
   const [height, setHeight] = useState();
   const modes = ["noWobble", "gentle", "wobbly", "stiff"];
   const myRef = useRef();
-
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
     return {
@@ -42,6 +41,29 @@ export default function ResponsivePlot(props) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+
+  const xData = props.data.map(entry => entry.x);
+  const yData = props.data.map(entry => entry.y);
+  if(xData.includes(undefined)|| yData.includes(undefined)) {
+    return (
+        <div style={Styles.BootstrapCenter} ref={myRef}>
+          <Col style={Styles.BootstrapCenter} xs={12}>
+            <Row style={{
+              height:windowSize.height * props.height,
+              width:windowSize.width * props.width,
+              backgroundColor:"rgba(227,227,227,0.75)",
+              borderRadius:"5px",
+              alignItems:"center",
+              justifyContent:"center",
+              ...Styles.BootstrapCenter
+            }}>
+             Error Parsing Data !
+           </Row>
+          </Col>
+        </div>
+    );
+  }
 
   if (!props.isMobile) {
     return (

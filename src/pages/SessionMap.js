@@ -1,7 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
-import {queryDives} from "../reducers/divesSlice";
-import {useEffect} from "react";
-import {Button, Col, Row} from "react-bootstrap";
+import {useEffect, useState} from "react";
+import {ToggleButton, Col, Row} from "react-bootstrap";
 import ResponsivePlot from "../components/ResponsivePlot";
 import { MapContainer } from 'react-leaflet/MapContainer'
 import { TileLayer } from 'react-leaflet/TileLayer'
@@ -14,6 +13,7 @@ import {CSVLink} from "react-csv";
 
 export default function SessionMap(){
     const navigate = useNavigate();
+    const [depth, setDepth] = useState(false);
     const session = useSelector(state => state.session)
     const loggedIn = useSelector(state => state.auth.loggedIn)
     const csvHeaders = [
@@ -50,10 +50,25 @@ export default function SessionMap(){
         });
     }
 
-    function depthSeries(key){
+    function depthSeries(key) {
         return session.records.map(obj => {
-            return{x:obj.depth,y:obj[key]}
-        });
+            return { x: obj.depth, y: obj[key] };
+        }).sort((a, b) => a.x - b.x);
+    }
+
+    function RenderPlot({dataKey}){
+        if(!depth || dataKey === 'depth'){
+            const data = timeSeries(dataKey);
+            return (
+                <ResponsivePlot width={0.45} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={data}/>
+            )
+        }else{
+            const data = depthSeries(dataKey);
+            return(
+                <ResponsivePlot width={0.45} height={.25} xtitle="Depth(m)" isMobile={false} xType={"linear"} data={data} />
+            )
+        }
+
     }
 
 
@@ -105,25 +120,30 @@ export default function SessionMap(){
                     padding:'1rem'
                 }}
             >
-            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Temperature</h3>
-                <ResponsivePlot width={0.45} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={timeSeries("temperature")} />
-                {/*<ResponsivePlot width={0.4} height={.25} xtitle="Depth(m)" isMobile={false} xType={"ordinal"} data={depthSeries("temperature")} />*/}
-            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Pressure</h3>
-                <ResponsivePlot width={0.45} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={timeSeries("pressure")} />
-                {/*<ResponsivePlot width={0.4} height={.25} xtitle="Depth(m)" isMobile={false} xType={"ordinal"} data={depthSeries("pressure")} />*/}
-            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>pH</h3>
-                <ResponsivePlot width={0.45} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={timeSeries("ph")} />
-                {/*<ResponsivePlot width={0.4} height={.25} xtitle="Depth(m)" isMobile={false} xType={"ordinal"} data={depthSeries("ph")} />*/}
-            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Light</h3>
-                <ResponsivePlot width={0.45} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={timeSeries("light")} />
-                {/*<ResponsivePlot width={0.4} height={.25} xtitle="Depth(m)" isMobile={false} xType={"ordinal"} data={depthSeries("light")} />*/}
-            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Depth</h3>
-                <ResponsivePlot width={0.45} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={timeSeries("depth")} />
-                {/*<ResponsivePlot width={0.4} height={.25} xtitle="Depth(m)" isMobile={false} xType={"ordinal"} data={depthSeries("depth")} />*/}
-            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Oxygen</h3>
-                <ResponsivePlot width={0.45} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={timeSeries("do")} />
-                {/*<ResponsivePlot width={0.4} height={.25} xtitle="Depth(m)" isMobile={false} xType={"ordinal"} data={depthSeries("do")} />*/}
-
+                <ToggleButton
+                    style={{...Styles.BootstrapCenter, marginLeft:"25%", marginRight:"25%"}}
+                    className="mb-2"
+                    id="toggle-check"
+                    type="checkbox"
+                    variant="outline-success"
+                    checked={depth}
+                    value="1"
+                    onChange={(e) => setDepth(e.currentTarget.checked)}
+                >
+                    {!depth ? "View as depth series" : "View as time series"}
+                </ToggleButton>
+                <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Depth</h3>
+                <RenderPlot dataKey={"depth"}/>
+                <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Temperature</h3>
+                <RenderPlot dataKey={"temperature"}/>
+                <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Pressure</h3>
+                <RenderPlot dataKey={"pressure"}/>
+                <h3 style={{textAlign:"center", paddingTop:"1rem"}}>pH</h3>
+                <RenderPlot dataKey={"ph"}/>
+                <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Light</h3>
+                <RenderPlot dataKey={"light"}/>
+                <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Oxygen</h3>
+                <RenderPlot dataKey={"do"}/>
             </Col>
         </Row>
     )
