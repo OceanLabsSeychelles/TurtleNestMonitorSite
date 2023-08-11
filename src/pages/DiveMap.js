@@ -27,8 +27,8 @@ export default function DiveMap() {
     }, [])
 
     useEffect(() => {
-        if (queryRef.current === true) return;
-        if (dives.status === "succeeded") return;
+        //if (queryRef.current === true) return;
+        //if (dives.status === "succeeded") return;
         dispatch(queryDives())
         queryRef.current = true;
     }, []);

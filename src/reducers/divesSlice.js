@@ -16,6 +16,7 @@ export const queryDives = createAsyncThunk(
         };
 
         const getResponse = await axios(axiosOptions);
+        console.log('dives/query response:', getResponse);
         const uniqueSessionIds = getResponse.data;
 
         const earliestRecords = [];

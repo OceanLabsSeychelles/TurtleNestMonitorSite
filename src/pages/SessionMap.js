@@ -60,7 +60,7 @@ export default function SessionMap(){
         if(!depth || dataKey === 'depth'){
             const data = timeSeries(dataKey);
             return (
-                <ResponsivePlot width={0.45} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={data}/>
+                <ResponsivePlot width={0.95} height={.25} xtitle="Time" isMobile={false} xType={"time"} data={data}/>
             )
         }else{
             const data = depthSeries(dataKey);
@@ -92,28 +92,10 @@ export default function SessionMap(){
                 Export : {date.toString()}
 
             </CSVLink>
-            <Col style={Styles.BootstrapCenter}>
-                <MapContainer center={[ingress.lat, ingress.lon]} zoom={18} maxZoom={25} scrollWheelZoom={false}>
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <Marker position={[egress.lat, egress.lon]}>
-                        <Popup>
-                            Egress
-                        </Popup>
-                    </Marker>
-                    <Marker position={[ingress.lat, ingress.lon]}>
-                        <Popup>
-                            Ingress
-                        </Popup>
-                    </Marker>
-                </MapContainer>
-            </Col>
             <Col
+                xs={12} md={6}
                 style={{
                     height:'90vh',
-                    width:"50%",
                     overflowY: 'scroll',
                     alignItems:'center',
                     justifyContent:'center',
@@ -144,6 +126,24 @@ export default function SessionMap(){
                 <RenderPlot dataKey={"light"}/>
                 <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Oxygen</h3>
                 <RenderPlot dataKey={"do"}/>
+            </Col>
+            <Col xs={12} md={6} style={Styles.BootstrapCenter}>
+                <MapContainer center={[ingress.lat, ingress.lon]} zoom={18} maxZoom={25} scrollWheelZoom={false}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[egress.lat, egress.lon]}>
+                        <Popup>
+                            Egress
+                        </Popup>
+                    </Marker>
+                    <Marker position={[ingress.lat, ingress.lon]}>
+                        <Popup>
+                            Ingress
+                        </Popup>
+                    </Marker>
+                </MapContainer>
             </Col>
         </Row>
     )
