@@ -43,9 +43,9 @@ export default function SessionMap(){
     }, [])
 
     function timeSeries(key) {
+        const startTime = new Date(session.records[0].datetime);
         return session.records.map(obj => {
-            const dt = new Date(obj.datetime)
-            const finalTime = new Date(dt.getTime() + (obj.runtime * 1000));
+            const finalTime = new Date(startTime.getTime() + (obj.runtime * 1000));
             return{x:finalTime,y:obj[key]}
         });
     }
