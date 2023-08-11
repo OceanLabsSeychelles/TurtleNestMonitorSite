@@ -4,19 +4,45 @@ import axios from 'axios';
 export const fetchSession = createAsyncThunk(
     'session/fetch',
     async (sessionId) => {
-        const queryUrl = `https://sfasurf-8806.restdb.io/rest/dreamdb?q={"sessionId":"${sessionId}"}`;
-        const axiosOptions = {
-            method: 'GET',
-            url: queryUrl,
-            headers: {
-                'cache-control': 'no-cache',
-                'x-apikey': '629678a3c4d5c3756d35a40e',
-                'content-type': 'application/json'
-            }
-        };
+        const MAX_RECORDS = 1000;
+        let allRecords = [];
+        let skip = 0; // This will be used to skip records we've already fetched
 
-        const getResponse = await axios(axiosOptions);
-        return getResponse.data; // All records for the given sessionId
+        while (true) {
+            const queryUrl = `https://sfasurf-8806.restdb.io/rest/dreamdb?q={"sessionId":"${sessionId}"}&max=${MAX_RECORDS}&skip=${skip}`;
+            const axiosOptions = {
+                method: 'GET',
+                url: queryUrl,
+                headers: {
+                    'cache-control': 'no-cache',
+                    'x-apikey': '629678a3c4d5c3756d35a40e',
+                    'content-type': 'application/json'
+                }
+            };
+
+            const getResponse = await axios(axiosOptions);
+            const data = getResponse.data;
+
+            // Add the fetched records to the allRecords array
+            allRecords = allRecords.concat(data);
+
+            // If the number of records fetched is less than MAX_RECORDS, break out of the loop
+            if (data.length < MAX_RECORDS) {
+                break;
+            }
+
+            // Otherwise, increase the skip value to fetch the next set of records
+            skip += MAX_RECORDS;
+        }
+
+        const seen = new Set();
+        const uniqueRecords = allRecords.filter(item => {
+            const isDuplicate = seen.has(item.nedbId);
+            seen.add(item.nedbId);
+            return !isDuplicate;
+        });
+
+        return uniqueRecords;
     }
 );
 
