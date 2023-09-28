@@ -4,13 +4,13 @@ import axios from 'axios';
 export const queryDives = createAsyncThunk(
     'dives/query',
     async () => {
-        const queryUrl = `https://sfasurf-8806.restdb.io/rest/dreamdb?q={"$distinct": "sessionId"}`;
+        const queryUrl = `${process.env.REACT_APP_RESTDB_DREAM_ENDPOINT}?q={"$distinct": "sessionId"}`;
         const axiosOptions = {
             method: 'GET',
             url: queryUrl,
             headers: {
                 'cache-control': 'no-cache',
-                'x-apikey': '629678a3c4d5c3756d35a40e',
+                'x-apikey': process.env.REACT_APP_RESTDB_X_API_KEY,
                 'content-type': 'application/json'
             }
         };

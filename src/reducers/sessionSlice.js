@@ -7,18 +7,20 @@ export const fetchSession = createAsyncThunk(
         const MAX_RECORDS = 1000;
         let allRecords = [];
         let skip = 0; // This will be used to skip records we've already fetched
-        console.log(JSON.stringify(process.env));
+        const apiKey = process.env.REACT_APP_RESTDB_X_API_KEY;
+        const baseUrl = process.env.REACT_APP_RESTDB_DREAM_ENDPOINT;
+
         while (true) {
-            const queryUrl = `${process.env.RESTDB_DREAM_ENDPOINT}q={"sessionId":"${sessionId}"}&max=${MAX_RECORDS}&skip=${skip}`;
+            const queryUrl = `${baseUrl}?q={"sessionId":"${sessionId}"}&max=${MAX_RECORDS}&skip=${skip}`;
             const axiosOptions = {
                 method: 'GET',
                 url: queryUrl,
                 headers: {
                     'cache-control': 'no-cache',
-                    'x-apikey': process.env.RESTDB_X_API_KEY,
+                    'x-apikey': apiKey,
                     'content-type': 'application/json'
                 }
-            };F
+            };
 
             const getResponse = await axios(axiosOptions);
             const data = getResponse.data;
