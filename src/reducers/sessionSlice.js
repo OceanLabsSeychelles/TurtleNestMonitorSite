@@ -7,18 +7,18 @@ export const fetchSession = createAsyncThunk(
         const MAX_RECORDS = 1000;
         let allRecords = [];
         let skip = 0; // This will be used to skip records we've already fetched
-
+        console.log(JSON.stringify(process.env));
         while (true) {
-            const queryUrl = `https://sfasurf-8806.restdb.io/rest/dreamdb?q={"sessionId":"${sessionId}"}&max=${MAX_RECORDS}&skip=${skip}`;
+            const queryUrl = `${process.env.RESTDB_DREAM_ENDPOINT}q={"sessionId":"${sessionId}"}&max=${MAX_RECORDS}&skip=${skip}`;
             const axiosOptions = {
                 method: 'GET',
                 url: queryUrl,
                 headers: {
                     'cache-control': 'no-cache',
-                    'x-apikey': '629678a3c4d5c3756d35a40e',
+                    'x-apikey': process.env.RESTDB_X_API_KEY,
                     'content-type': 'application/json'
                 }
-            };
+            };F
 
             const getResponse = await axios(axiosOptions);
             const data = getResponse.data;
