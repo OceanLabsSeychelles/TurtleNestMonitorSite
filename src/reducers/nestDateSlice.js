@@ -23,7 +23,6 @@ export const queryNestDate = createAsyncThunk(
         const getResponse = await axios(axiosOptions);
         const records = getResponse.data;
         console.log('nest records:', records);
-
         return records;
     }
 );

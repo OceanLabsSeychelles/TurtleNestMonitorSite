@@ -20,9 +20,8 @@ export default function Header() {
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link style={{textAlign: 'center'}} href="/dives">Dive Record</Nav.Link>
-                            <Nav.Link style={{textAlign: 'center'}} href="/live">NEST-Live</Nav.Link>
-                            <Nav.Link style={{textAlign: 'center'}} href="/history">NEST-History</Nav.Link>
+                            <Nav.Link style={{textAlign: 'center'}} href="/dives">DREAM</Nav.Link>
+                            <Nav.Link style={{textAlign: 'center'}} href="/nest">NEST</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                     <Nav.Link onClick={()=>{
