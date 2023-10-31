@@ -7,6 +7,8 @@ import graphDataSlice from './reducers/graphDataSlice';
 import divesSlice from './reducers/divesSlice';
 import sessionSlice from './reducers/sessionSlice';
 import authSlice from './reducers/authSlice';
+import nestDatesSlice from "./reducers/nestSlice";
+import nestDateSlice from "./reducers/nestDateSlice";
 
 const persistConfig = {
   key: 'root',
@@ -19,6 +21,8 @@ const rootReducer = combineReducers({
   dives: divesSlice,
   session: sessionSlice,
   auth: authSlice,
+  nestDates: nestDatesSlice,
+  nestDate: nestDateSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

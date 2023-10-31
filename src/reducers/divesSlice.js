@@ -20,7 +20,7 @@ export const queryDives = createAsyncThunk(
 
         const earliestRecords = [];
         for (let sessionId of uniqueSessionIds) {
-            const queryUrl = `https://sfasurf-8806.restdb.io/rest/dreamdb?q={"sessionId":"${sessionId}"}&sort=recordIndex&max=1`;
+            const queryUrl = `${process.env.REACT_APP_RESTDB_DREAM_ENDPOINT}?q={"sessionId":"${sessionId}"}&sort=recordIndex&max=1`;
             const getResponse = await axios({ ...axiosOptions, url: queryUrl });
             const earliestRecord = getResponse.data[0];
             earliestRecords.push(earliestRecord);
