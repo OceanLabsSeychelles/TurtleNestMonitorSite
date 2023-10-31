@@ -8,7 +8,7 @@ export const queryNestDate = createAsyncThunk(
         const baseUrl = process.env.REACT_APP_RESTDB_NEST_ENDPOINT;
 
         console.log('queryNestDate: ', date);
-        const queryUrl = `${baseUrl}?q={"date":"${date}"}`;
+        const queryUrl = `${baseUrl}?q={"date":"${date}"}&metafields=true`;
         console.log('queryUrl:', queryUrl);
         const axiosOptions = {
             method: 'GET',

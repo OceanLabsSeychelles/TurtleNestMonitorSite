@@ -22,6 +22,8 @@ export default function Nest() {
     const queryRef = useRef(null);
     const loggedIn = useSelector(state => state.auth.loggedIn)
     const [flatData, setFlatData] = useState([]);
+    const [sessionDate, setSessionDate] = useState("Select a date to view data.");
+    const [tooltipDate, setTooltipDate] = useState("Select a date.");
 
     const headers = [
         {label: "Date", key: "d"},
@@ -67,7 +69,7 @@ export default function Nest() {
                     data={flatData}
                     headers={headers}
                     filename={`nestExport-${new Date().toJSON()}.csv`}
-                    className="btn btn-primary"
+                    className="btn btn-success"
                 >
                     Export All Data
                 </CSVLink>
@@ -83,11 +85,24 @@ export default function Nest() {
         }
     }
 
+    function convertUtcToLocalTime(utcDateString) {
+        // Create a Date object from the UTC string
+        const utcDate = new Date(utcDateString);
+
+        // Convert UTC date to the browser's local time and format it as a string
+        const localDateString = utcDate.toLocaleString();
+
+        return localDateString;
+    }
+
+
     function timeSeries(key) {
-        const startTime = new Date(session.records[0].datetime);
+
+        const startTime = convertUtcToLocalTime(session.records[0]["_created"])
         return session.records.map(obj => {
-            const finalTime = new Date(startTime.getTime() + (obj.runtime * 1000));
-            return{x:new Date(obj.datetime),y:obj[key]}
+            const finalTime = new Date(startTime + (obj.runtime * 1000));
+            console.log(obj)
+            return{x:new Date(convertUtcToLocalTime(obj["_created"])),y:obj[key]}
         });
     }
 
@@ -95,42 +110,8 @@ export default function Nest() {
             const data = timeSeries(dataKey);
             console.log(data);
             return (
-                <ResponsivePlot width={0.6} height={.15} xtitle="Time" isMobile={false} xType={"time"} data={data}/>
+                <ResponsivePlot width={0.65} height={.15} xtitle="Time" isMobile={false} xType={"time"} data={data}/>
             )
-    }
-
-
-    const RenderDates = () => {
-        return (
-            <Row
-                style={{justifyContent: "center"}}
-            >
-                {foundDates.records.map((record, index) => {
-                    return (
-                        <label
-                            key={record.date}
-                            // disabled={session.status === "loading"}
-                            onClick={async () => {
-                                dispatch(queryNestDate(record));
-                            }}
-                            style={{
-                                cursor: "pointer",
-                                margin: ".5rem",
-                                padding: "0.5rem",
-                                borderRadius: "5px",
-                                borderWidth: "2px",
-                                borderStyle: "solid",
-                                width: "60%",
-                                textAlign: "center",
-
-                            }}
-                        >
-                            {record}
-                        </label>
-                    )
-                })}
-            </Row>
-        )
     }
 
     const endDate = new Date();  // today's date
@@ -163,28 +144,47 @@ export default function Nest() {
                     <Col xl={3} style={{
                         display: "flex",
                         flexDirection: "column",
-                        backgroundColor: "ghostwhite",
+                        borderWidth: "5px",
+                        borderColor: "rgb(128,193,108)",
+                        borderStyle: "solid",
+                        borderRadius: "12px",
                         height: "87vh",
                         alignItems: "center",
                         alignContent: "center",
                         justifyContent: "center",
                     }}>
+                        <h5 style={{color:"gray"}}>{tooltipDate}</h5>
+
                         <Row style={{
                             width: "65%",
                             alignSelf: "center",
                             justifyContent: "center",
                             alignItems: "center",
-                            margin: "2rem",
                             padding: "2rem",
                         }}>
+
                             <CalendarHeatmap
                                 horizontal={false}
+                                titleForValue={(value) => {
+                                    if(value === null)return;
+                                    return value.date
+                                }}
+                                onMouseOver={(event, value) => {
+                                    if(value===null)return;
+                                    console.log(value);
+                                    setTooltipDate(value.date)
+                                }}
+                                onMouseLeave={()=>{
+                                    setTooltipDate("Select a date.");
+                                }}
                                 startDate={startDate}
                                 endDate={endDate}
                                 values={foundDates.records.map((record, index) => {
                                     return {date: record, count: 1}
                                 })}
                                 onClick={(value) => {
+                                    if(value === null)return;
+                                    setSessionDate(value.date);
                                     dispatch(queryNestDate(value.date));
                                 }}
                             />
@@ -210,23 +210,33 @@ export default function Nest() {
                         style={{
                             height: "87vh",
                             overflowY: 'scroll',
+                            width: "100%",
                         }}
                     >
-                            <h3>Session Data</h3>
+                            <h4 style={{
+                                textAlign: "center",
+                                color:"gray"
+                            }}>{sessionDate}</h4>
                         {session.status === "succeeded" &&
                             <FadeIn>
-                            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Temperature</h3>
+                            <p style={{textAlign:"center", paddingTop:"0rem"}}>Temperature</p>
                             <RenderPlot dataKey={"temperature"}/>
 
-                            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Humidity</h3>
+                            <p style={{textAlign:"center", paddingTop:"0rem"}}>Humidity</p>
                             <RenderPlot dataKey={"humidity_median"}/>
 
-                            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Oxygen</h3>
+                            <p style={{textAlign:"center", paddingTop:"0rem"}}>Oxygen</p>
                             <RenderPlot dataKey={"oxygen"}/>
 
-                            <h3 style={{textAlign:"center", paddingTop:"1rem"}}>Motion</h3>
+                            <p style={{textAlign:"center", paddingTop:"0rem"}}>Motion</p>
                             <RenderPlot dataKey={"motion_sd"}/>
-                            {renderExportButton()}
+                            <div style={{
+                                display:"flex",
+                                justifyContent:"center",
+                                alignItems:"center",
+                            }}>
+                                {renderExportButton()}
+                            </div>
                             </FadeIn>
                         }
                     </Col>

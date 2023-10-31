@@ -78,7 +78,7 @@ export default function ResponsivePlot(props) {
             <VerticalGridLines />
             <HorizontalGridLines />
             <XAxis title={props.xtitle}/>
-            <YAxis />
+            <YAxis tickSizeOuter={"10px"}/>
             <MarkSeries
                 size={4}
                 data={props.data}
